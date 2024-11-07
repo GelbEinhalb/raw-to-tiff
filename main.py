@@ -1,4 +1,5 @@
 import os
+import time
 import tkinter as tk
 from tkinter import scrolledtext
 from tkinter import filedialog
@@ -11,8 +12,8 @@ class App:
     def __init__(self, root):
         self.root = root
         self.root.title("Camera Raw to Tiff")
-        self.root.geometry("900x400")
-        self.root.resizable(False, False)
+        self.root.geometry("600x400")
+        self.root.resizable(True, False)
 
         self.console = scrolledtext.ScrolledText(root, wrap=tk.WORD, height=20, width=120)
         self.console.pack(padx=10, pady=10)
@@ -24,6 +25,7 @@ class App:
         self.saved_logs = []
 
     def convert(self) -> None:
+        start_time = time.time()
         folder_path = filedialog.askdirectory()
         destination_path = os.path.join(folder_path, "tiff")
 
@@ -45,7 +47,8 @@ class App:
             self.add_text(f"[INFO] found \"{file_path}\"", destination_path)
             convert.convert(file_path, destination_path, self.add_text)
 
-        self.add_text(f"[INFO] FINISHED", destination_path)
+        end_time = time.time()
+        self.add_text(f"[INFO] FINISHED IN {round(end_time - start_time, 2)} SECONDS", destination_path)
 
 
     def add_text(self, text, destination = None):
