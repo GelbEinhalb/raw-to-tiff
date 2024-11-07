@@ -15,4 +15,4 @@ def convert(filepath, destination, add_text):
         add_text(f"[INFO] converting \"{filepath}\" to tiff", destination)
         with Image.open(filepath) as img:
             tiff_path = os.path.join(destination, os.path.splitext(os.path.basename(filepath))[0] + '.tiff')
-            img.save(tiff_path, format='TIFF')
+            img.save(tiff_path, format='TIFF', compression='tiff_lzw')
