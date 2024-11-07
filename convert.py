@@ -23,5 +23,5 @@ def convert(filepath, destination, add_text):
 
             tiff_path = os.path.join(destination, os.path.splitext(os.path.basename(filepath))[0] + '.tiff')
 
-            imageio.imwrite(filepath=tiff_path, im=rgb, format='TIFF')
+            imageio.imwrite(uri=tiff_path, im=rgb, format='TIFF')
             add_text(f"[INFO] saved \"{tiff_path}\" as uncompressed 16-bit TIFF", destination)
