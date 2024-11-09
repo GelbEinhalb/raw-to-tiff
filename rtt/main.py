@@ -25,6 +25,7 @@ class App:
         self.saved_logs = []
 
     def convert(self) -> None:
+        self.button.config(state=tk.DISABLED)
         start_time = time.time()
         folder_path = filedialog.askdirectory()
         destination_path = os.path.join(folder_path, "tiff")
@@ -50,8 +51,9 @@ class App:
         end_time = time.time()
         self.add_text(f"[INFO] FINISHED IN {round(end_time - start_time, 2)} SECONDS", destination_path)
 
+        self.button.config(state=tk.NORMAL)
 
-    def add_text(self, text, destination = None):
+    def add_text(self, text, destination=None):
         if destination is None:
             self.saved_logs.append(text)
         else:
