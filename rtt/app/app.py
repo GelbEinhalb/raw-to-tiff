@@ -24,10 +24,3 @@ class App:
 
     def convert(self) -> None:
         log.debug("test")
-
-
-if __name__ == "__main__":
-    rt = tk.Tk()
-    app = App(rt)
-
-    rt.mainloop()
