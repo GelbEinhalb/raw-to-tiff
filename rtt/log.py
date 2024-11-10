@@ -1,5 +1,7 @@
 import os
+import config
 import datetime
+
 import tkinter as tk
 from tkinter import scrolledtext
 from typing import List
@@ -12,12 +14,12 @@ class _Log:
     @staticmethod
     def initialize_tags():
         if _Log.console is not None:
-            _Log.console.tag_config("WELCOME", foreground="purple", font=("TkDefaultFont", 12, "bold"))
-            _Log.console.tag_config("DEBUG", foreground="black")
-            _Log.console.tag_config("INFO", foreground="dark green")
-            _Log.console.tag_config("WARNING", foreground="orange")
-            _Log.console.tag_config("ERROR", foreground="red")
-            _Log.console.tag_config("CRITICAL", foreground="dark red")
+            _Log.console.tag_config("WELCOME", foreground=config.Color.PURPLE, font=("TkDefaultFont", 12, "bold"))
+            _Log.console.tag_config("DEBUG", foreground=config.Color.WHITE)
+            _Log.console.tag_config("INFO", foreground=config.Color.GREEN)
+            _Log.console.tag_config("WARNING", foreground=config.Color.ORANGE)
+            _Log.console.tag_config("ERROR", foreground=config.Color.RED)
+            _Log.console.tag_config("CRITICAL", foreground=config.Color.RED)
 
     @staticmethod
     def write(text: str, level: str = "INFO") -> None:
