@@ -1,6 +1,6 @@
-import os
 import datetime
-
+import tkinter as tk
+from tkinter import scrolledtext
 from typing import List
 
 
@@ -8,9 +8,16 @@ class _Log:
 
     cache: List[str] = []
     location: str = None
+    console: scrolledtext.ScrolledText = None
 
     @staticmethod
     def write(text: str) -> None:
+        if _Log.console is not None:
+            _Log.console.config(state=tk.NORMAL)
+            _Log.console.insert(tk.END, text + "\n")
+            _Log.console.see(tk.END)
+            _Log.console.config(state=tk.DISABLED)
+
         if _Log.location is None:
             _Log.cache.append(text)
             return
@@ -23,6 +30,9 @@ def set_location(path: str) -> None:
     _Log.location = path + "log.txt"
     for line in _Log.cache:
         _Log.write(line)
+
+def set_console(console: scrolledtext.ScrolledText) -> None:
+    _Log.console = console
 
 # Information to help diagnose a problem
 def debug(text: str) -> None:
