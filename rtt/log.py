@@ -14,10 +14,10 @@ class _Log:
         if _Log.console is not None:
             _Log.console.tag_config("WELCOME", foreground="purple", font=("TkDefaultFont", 12, "bold"))
             _Log.console.tag_config("DEBUG", foreground="black")
-            _Log.console.tag_config("INFO", foreground="dark green", font=("TkDefaultFont", 10, "bold"))
+            _Log.console.tag_config("INFO", foreground="dark green")
             _Log.console.tag_config("WARNING", foreground="orange")
-            _Log.console.tag_config("ERROR", foreground="red", font=("TkDefaultFont", 11, "bold"))
-            _Log.console.tag_config("CRITICAL", foreground="dark red", font=("TkDefaultFont", 11, "bold"))
+            _Log.console.tag_config("ERROR", foreground="red")
+            _Log.console.tag_config("CRITICAL", foreground="dark red")
 
     @staticmethod
     def write(text: str, level: str = "INFO") -> None:
