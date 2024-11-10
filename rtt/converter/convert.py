@@ -11,7 +11,6 @@ def is_raw_file(path):
     return is_raw
 
 def convert(path, destination, increment):
-    increment()
     if is_raw_file(path):
         with rawpy.imread(path) as raw:
             rgb = raw.postprocess(
@@ -23,3 +22,4 @@ def convert(path, destination, increment):
             tiff_path = os.path.join(destination, os.path.splitext(os.path.basename(path))[0] + '.tiff')
             imageio.imwrite(uri=tiff_path, im=rgb, format='TIFF')
             log.info(f"Converted \"{path}\"")
+    increment()
