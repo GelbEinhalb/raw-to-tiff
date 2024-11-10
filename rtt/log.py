@@ -26,6 +26,9 @@ class _Log:
         with open(_Log.location, "a") as file:
             file.write(text + "\n")
 
+        if _Log.console is not None:
+            _Log.console.after(0, lambda: _Log.console.insert(tk.END, text + "\n"))
+
 
 def set_location(path: str) -> None:
     _Log.location = os.path.join(path, "log.txt")
@@ -35,27 +38,22 @@ def set_location(path: str) -> None:
 def set_console(console: scrolledtext.ScrolledText) -> None:
     _Log.console = console
 
-# Information to help diagnose a problem
 def debug(text: str) -> None:
     date_str: str = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
     _Log.write(f"[DEBUG] ({date_str}): {text}")
 
-# Information about the process
 def info(text: str) -> None:
     date_str: str = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
     _Log.write(f"[INFO] ({date_str}): {text}")
 
-# Something doesn't seem right
 def warning(text: str) -> None:
     date_str: str = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
     _Log.write(f"[WARNING] ({date_str}): {text}")
 
-# Something went wrong
 def error(text: str) -> None:
     date_str: str = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
     _Log.write(f"[ERROR] ({date_str}): {text}")
 
-# Something went wrong, and the process was cancelled
 def critical(text: str) -> None:
     date_str: str = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
     _Log.write(f"[CRITICAL] ({date_str}): {text}")
