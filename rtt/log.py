@@ -1,3 +1,4 @@
+import os
 import datetime
 import tkinter as tk
 from tkinter import scrolledtext
@@ -27,7 +28,7 @@ class _Log:
 
 
 def set_location(path: str) -> None:
-    _Log.location = path + "log.txt"
+    _Log.location = os.path.join(path, "log.txt")
     for line in _Log.cache:
         _Log.write(line)
 
