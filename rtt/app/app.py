@@ -73,7 +73,7 @@ class App:
         log.debug(f"selected folder \"{path}\"")
 
         if not path or not os.path.exists(path):
-            log.error("you need to select a valid folder path")
+            log.critical("you need to select a valid folder path")
             self.button.config(state=tkinter.NORMAL)
             return
 
