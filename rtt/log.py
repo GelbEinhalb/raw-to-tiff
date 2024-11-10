@@ -6,7 +6,9 @@ import tkinter as tk
 from tkinter import scrolledtext
 from typing import List
 
+
 class _Log:
+
     cache: List[str] = []
     location: str = None
     console: scrolledtext.ScrolledText = None
@@ -14,7 +16,7 @@ class _Log:
     @staticmethod
     def initialize_tags():
         if _Log.console is not None:
-            _Log.console.tag_config("WELCOME", foreground=config.Color.PURPLE, font=("TkDefaultFont", 12, "bold"))
+            _Log.console.tag_config("WELCOME", foreground=config.Color.GREEN, font=("TkDefaultFont", 12, "bold"))
             _Log.console.tag_config("DEBUG", foreground=config.Color.WHITE)
             _Log.console.tag_config("INFO", foreground=config.Color.GREEN)
             _Log.console.tag_config("WARNING", foreground=config.Color.ORANGE)
@@ -22,26 +24,28 @@ class _Log:
             _Log.console.tag_config("CRITICAL", foreground=config.Color.RED)
 
     @staticmethod
-    def write(text: str, level: str = "INFO") -> None:
-        # Insert text with the level tag directly if called from the main thread
+    def _write_to_console(text: str, level: str, hide_info: bool = False) -> None:
+
+        date_str: datetime.datetime.now = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
+        final: str = f"[{level}] ({date_str}): {text}" if not hide_info else text
+
         if _Log.console is not None:
             _Log.console.config(state=tk.NORMAL)
-            _Log.console.insert(tk.END, text + "\n", level)
+            _Log.console.insert(tk.END, final + "\n", level)
             _Log.console.see(tk.END)
             _Log.console.config(state=tk.DISABLED)
 
-        # Write to log file
+
         if _Log.location is None:
-            _Log.cache.append(text)
+            _Log.cache.append(final)
             return
 
         with open(_Log.location, "a") as file:
-            file.write(text + "\n")
+            file.write(final + "\n")
 
     @staticmethod
-    def write_to_console(text: str, level: str) -> None:
-        if _Log.console is not None:
-            _Log.console.after(0, lambda: _Log.write(text, level))
+    def write(text: str, level: str, hide_info: bool = False) -> None:
+        _Log.console.after(0, lambda: _Log._write_to_console(text, level, hide_info))
 
 
 def set_location(path: str) -> None:
@@ -52,27 +56,21 @@ def set_console(console: scrolledtext.ScrolledText) -> None:
         _Log.console = console
         _Log.initialize_tags()
 
-def welcome(text: str) -> None:
-    date_str = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
-    _Log.write_to_console(f"[WELCOME] ({date_str}): {text}", "WELCOME")
+def welcome(text: str, hide_info: bool = False) -> None:
+    _Log.write(text, "WELCOME", hide_info)
 
-def debug(text: str) -> None:
-    date_str = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
-    _Log.write_to_console(f"[DEBUG] ({date_str}): {text}", "DEBUG")
+def debug(text: str, hide_info: bool = False) -> None:
+    _Log.write(text, "DEBUG", hide_info)
 
-def info(text: str) -> None:
-    date_str = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
-    _Log.write_to_console(f"[INFO] ({date_str}): {text}", "INFO")
+def info(text: str, hide_info: bool = False) -> None:
+    _Log.write(text, "INFO", hide_info)
 
-def warning(text: str) -> None:
-    date_str = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
-    _Log.write_to_console(f"[WARNING] ({date_str}): {text}", "WARNING")
+def warning(text: str, hide_info: bool = False) -> None:
+    _Log.write(text, "WARNING", hide_info)
 
-def error(text: str) -> None:
-    date_str = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
-    _Log.write_to_console(f"[ERROR] ({date_str}): {text}", "ERROR")
+def error(text: str, hide_info: bool = False) -> None:
+    _Log.write(text, "ERROR", hide_info)
 
-def critical(text: str) -> None:
-    date_str = datetime.datetime.now().strftime("%Y.%m.%d-%H:%M:%S")
-    _Log.write_to_console(f"[CRITICAL] ({date_str}): {text}", "CRITICAL")
+def critical(text: str, hide_info: bool = False) -> None:
+    _Log.write(text, "CRITICAL", hide_info)
 

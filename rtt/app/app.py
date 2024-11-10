@@ -48,17 +48,18 @@ class App:
         # Content
         self.content = tk.Frame(root, bg=config.Color.BACKGROUND)
         self.content.pack(fill="both", expand=True)
-        self.console: scrolledtext.ScrolledText = scrolledtext.ScrolledText(self.content, wrap=tk.WORD, bg=config.Color.BACKGROUND, height=23, width=120)
+        self.console: scrolledtext.ScrolledText = scrolledtext.ScrolledText(self.content, wrap=tk.WORD, bg=config.Color.BACKGROUND, height=23, width=120, bd=0)
         self.console.config(state=tk.DISABLED)
         self.console.pack(padx=10, pady=10, fill=tk.X)
         self.label = tk.Label(self.content, text="Idle", bg=config.Color.BACKGROUND, fg=config.Color.WHITE)
         self.label.pack(pady=2)
-        self.button: tk.Button = tk.Button(self.content, text="Start", command=self.start_conversion, fg=config.Color.BACKGROUND_DARK, bg=config.Color.BUTTON, activeforeground=config.Color.WHITE, activebackground=config.Color.BUTTON, bd=0, highlightbackground=config.Color.BACKGROUND_DARK, highlightcolor=config.Color.BACKGROUND)
+        self.button: tk.Button = tk.Button(self.content, text="Start", command=self.start_conversion, fg=config.Color.BACKGROUND_DARK, bg=config.Color.GREEN, activeforeground=config.Color.WHITE, activebackground=config.Color.BUTTON, bd=0, highlightbackground=config.Color.BACKGROUND_DARK, highlightcolor=config.Color.BACKGROUND)
         self.button.pack(padx=10, pady=10, fill=tk.X)
 
         log.set_console(self.console)
-        log.welcome("Click the \"Start\" button below to select a folder!")
-        log.welcome("You can cancel the conversion at any time by closing this window.")
+        log.welcome("Click the \"Start\" button below to select a folder!", True)
+        log.welcome("You can cancel the conversion at any time by closing this window.", True)
+        log.info("=================================================================", True)
 
         self.count: int = 0
         self.start_time: float = 0
